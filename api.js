@@ -1,3 +1,7 @@
+const Discord = require('discord.js');
+const client = new Discord.Client();
+client.login(process.env.DISCORDJS_BOT_TOKEN);
+
 // ----- Firebase Config Start -----
 var admin = require("firebase-admin");
 var serviceAccount = require("./firebase-admin.json");
@@ -15,7 +19,7 @@ var birthdayData = database.ref(process.env.FIREBASE_BDAY_PATH)
 
 module.exports = {
 
-    getUser : (id) => {
+    getUser: (id) => {
         return new Promise((resolve, reject) => {
             memberData.child(id).once('value', (snapshot) => {
                 if (snapshot.val() != null) {
@@ -27,7 +31,7 @@ module.exports = {
         })
     },
 
-    getBday : (id) => {
+    getBday: (id) => {
         return new Promise((resolve, reject) => {
             birthdayData.child(id).once('value', (snapshot) => {
                 if (snapshot.val() != null) {
@@ -39,25 +43,25 @@ module.exports = {
         })
     },
 
-    formatUserData : (id) => {
+    formatUserData: (id) => {
         return new Promise((resolve, reject) => {
             module.exports.getUser(id).then(user => {
                 module.exports.getBday(id).then(bday => {
                     var data = {
-                        _id : user['Discord User ID'],
-                        name : user['Full Name'],
-                        email : user.Email,
-                        mobile : user['Mobile (WhatsApp)'],
-                        gender : user.Gender,
-                        dob : {
-                            day : bday.Day,
-                            month : bday.Month,
-                            year : bday.Year
+                        _id: user['Discord User ID'],
+                        name: user['Full Name'],
+                        email: user.Email,
+                        mobile: user['Mobile (WhatsApp)'],
+                        gender: user.Gender,
+                        dob: {
+                            day: bday.Day,
+                            month: bday.Month,
+                            year: bday.Year
                         },
-                        department : user.Department,
-                        college : user.College,
-                        admission : user['Year of Admission'],
-                        interest : user['Area of Interest'].split(', '),
+                        department: user.Department,
+                        college: user.College,
+                        admission: user['Year of Admission'],
+                        interest: user['Area of Interest'].split(', '),
                     }
                     resolve(data)
                 })
@@ -67,13 +71,13 @@ module.exports = {
         })
     },
 
-    getExtUserData : (id, client) => {
+    getExtUserData: (id) => {
         return new Promise((resolve, reject) => {
             module.exports.formatUserData(id).then(user => {
                 client.users.fetch(id).then(d_data => {
                     user.discord = {
-                        tag : d_data.tag,
-                        avatar : 'https://cdn.discordapp.com/avatars/' + d_data.id + '/' + d_data.avatar + '.png',
+                        tag: d_data.tag,
+                        avatar: 'https://cdn.discordapp.com/avatars/' + d_data.id + '/' + d_data.avatar + '.png',
                     }
                     resolve(user)
                 })
@@ -82,8 +86,31 @@ module.exports = {
                 reject(err)
             })
         })
+    },
+
+    getBdayUser: (date, month) => {
+        return new Promise((resolve, reject) => {
+            birthdayData.once('value', async (snapshot) => {
+                
+                var data = [];
+                var bDayData = await snapshot.val();
+                for (var key in bDayData) {
+                    var bDayMonth = bDayData[key].Month;
+                    var bDayDay = bDayData[key].Day;
+
+                    if (bDayMonth == month && bDayDay == date) {
+                        data.push(key)
+                    }
+                }
+
+                if (data.length == 0) {
+                    reject('No data found')
+                } else {
+                    resolve(data)
+                }
+            })
+            
+        })
     }
 
 }
-
-// client.users.fetch(id).then(d_data => {})
