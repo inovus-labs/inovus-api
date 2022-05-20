@@ -35,6 +35,16 @@ app.get('/bday', (req, res) => {
     })
 })
 
+app.get('/bday/:mm', (req, res) => {
+    var month = req.params.mm;
+
+    api.getBdaysByMonth(month).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
 
 app.listen(process.env.PORT | 5000, () => {
     console.log(`Server is running on PORT ${process.env.PORT}`);

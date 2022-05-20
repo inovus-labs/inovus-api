@@ -111,6 +111,27 @@ module.exports = {
             })
             
         })
+    },
+
+    getBdaysByMonth: (month) => {
+        return new Promise((resolve, reject) => {
+            birthdayData.once('value', async (snapshot) => {
+                
+                var data = {};
+                var bDayData = await snapshot.val();
+                for (var key in bDayData) {
+                    if (bDayData[key].Month == month) {
+                        data[key] = bDayData[key]
+                    }
+                }
+
+                if (data.length == 0) {
+                    reject('No data found')
+                } else {
+                    resolve(data)
+                }
+            })
+        })
     }
 
 }
