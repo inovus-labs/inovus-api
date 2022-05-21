@@ -1,8 +1,27 @@
 # Inovus API
-The one ultimate API that all Inovus Fellows will ever need to build anything using its Community Database.
+> The one ultimate API that all Inovus Fellows will ever need to build anything using its Community Database.
 
+## About Us
 
-### Basic User Data
+[**Inovus Labs**](https://inovuslabs.org/) is a Student Community with the ideology relied around the core value of peer-to-peer learning & self-exploration. Since 2015 - the year it was formed, [**Inovus Labs**](https://inovuslabs.org/) had taken-up the responsibility of managing different entities like [**Innovation & Entrepreneurship Development Center (IEDC)**](https://iedc.startupmission.in/), [**TinkerHub KJCMT**](https://tinkerhub.org/), [**HackClub KJCMT**](https://kjcmt.hackclub.com/) & [**GTech µLearn**](https://mulearn.org/) at [**Kristu Jyoti College**](http://kjcmt.ac.in/).
+
+## About Project
+
+As a community of developers & makers, we do initiate small projects very often and most of which rely around community itself.
+
+> This is a project to build an API that could gather, process & store data from different locations and delivers it securely to required projects. Infact, this Inovus API is built to facilitate different other projects that are under consideration.
+
+This API performs the following functions:
+- Gather data from multiple [**Firebase Real-time Databases**](https://firebase.google.com/), [**Google Sheets**](https://developers.google.com/sheets/api) & [**Discord API**](https://discord.js.org).
+- Curate different data collections (Data Formating)
+- Delivers required data securely via **JWT Authorized Routes** to different projects like [**Chacko Mash**](https://github.com/decoded-cipher/chacko-mash), [**Scrapbook**](https://github.com/decoded-cipher/scrapbook), **Inovus Profiles** & many more...
+
+---
+
+## API Documentation
+> Here a list of available API routes that could deliver data securely.
+
+### ⭐ Basic User Data
 | Method | Endpoint | Parameter(s) | Auth | Description |
 | --- | --- | --- | --- | --- |
 | `GET` | `/user` | `id` | ✅ | Get basic details of a particular user |
@@ -34,7 +53,7 @@ The one ultimate API that all Inovus Fellows will ever need to build anything us
 }
 ```
 
-### Extended User Data
+### ⭐ Extended User Data
 | Method | Endpoint | Parameter(s) | Auth | Description |
 | --- | --- | --- | --- | --- |
 | `GET` | `/user/ext` | `id` | ✅ | Get all details of a user including Discord Data |
@@ -70,7 +89,7 @@ The one ultimate API that all Inovus Fellows will ever need to build anything us
 }
 ```
 
-### User(s) with Birthday(s) on a Date
+### ⭐ User(s) with Birthday(s) on a Date
 | Method | Endpoint | Parameter(s) | Auth | Description |
 | --- | --- | --- | --- | --- |
 | `GET` | `/bday ` | `mm` `dd` | ✅ | Get the id(s) of user(s) who is having bday on the date |
@@ -84,7 +103,7 @@ The one ultimate API that all Inovus Fellows will ever need to build anything us
 ]
 ```
 
-### Birthday(s) on a Month
+### ⭐ Birthday(s) in a Month
 | Method | Endpoint | Auth | Description |
 | --- | --- | --- | --- |
 | `GET` | `/bday/:mm` | ✅ | Get the id(s) of the user(s) who is having bday on the month |
