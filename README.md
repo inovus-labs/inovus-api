@@ -85,9 +85,9 @@ The one ultimate API that all Inovus Fellows will ever need to build anything us
 ```
 
 ### Birthday(s) on a Month
-| Method | Endpoint | Parameter(s) | Auth | Description |
-| --- | --- | --- | --- | --- |
-| `GET` | `/bday/:mm` | | ✅ | Get the id(s) of the user(s) who is having bday on the month |
+| Method | Endpoint | Auth | Description |
+| --- | --- | --- | --- |
+| `GET` | `/bday/:mm` | ✅ | Get the id(s) of the user(s) who is having bday on the month |
 
 #### Response Example
 ```json
