@@ -4,7 +4,7 @@ var api = require('./api')
 var express = require('express')
 var app = express()
 
-app.get('/user', api.checkAuth, (req, res) => {
+app.get('/user', (req, res) => {
     var id = req.query.id;
     
     api.formatUserData(id).then(data => {
