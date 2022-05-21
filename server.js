@@ -4,7 +4,7 @@ var api = require('./api')
 var express = require('express')
 var app = express()
 
-app.get('/user', (req, res) => {
+app.get('/user', api.checkAuth, (req, res) => {
     var id = req.query.id;
     
     api.formatUserData(id).then(data => {
@@ -45,7 +45,13 @@ app.get('/bday/:mm', api.checkAuth, (req, res) => {
     })
 })
 
+app.get('*', (req, res) => {
+    res.status(404).send({
+        error: 'Page not found'
+    })
+})
 
-app.listen(process.env.PORT | 5000, () => {
+
+app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is running on PORT ${process.env.PORT}`);
 })
