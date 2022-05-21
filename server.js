@@ -4,7 +4,7 @@ var api = require('./api')
 var express = require('express')
 var app = express()
 
-app.get('/user', (req, res) => {
+app.get('/user', api.checkAuth, (req, res) => {
     var id = req.query.id;
     
     api.formatUserData(id).then(data => {
@@ -14,7 +14,7 @@ app.get('/user', (req, res) => {
     })
 })
 
-app.get('/user/ext', (req, res) => {
+app.get('/user/ext', api.checkAuth, (req, res) => {
     var id = req.query.id;
     
     api.getExtUserData(id).then(data => {
@@ -24,7 +24,7 @@ app.get('/user/ext', (req, res) => {
     })
 })
 
-app.get('/bday', (req, res) => {
+app.get('/bday', api.checkAuth, (req, res) => {
     var date = req.query.dd;
     var month = req.query.mm;
 
@@ -35,7 +35,7 @@ app.get('/bday', (req, res) => {
     })
 })
 
-app.get('/bday/:mm', (req, res) => {
+app.get('/bday/:mm', api.checkAuth, (req, res) => {
     var month = req.params.mm;
 
     api.getBdaysByMonth(month).then(data => {

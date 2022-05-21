@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 client.login(process.env.DISCORDJS_BOT_TOKEN);
 
+var jwt = require('jsonwebtoken');
+
 // ----- Firebase Config Start -----
 var admin = require("firebase-admin");
 var serviceAccount = require("./firebase-admin.json");
@@ -132,6 +134,25 @@ module.exports = {
                 }
             })
         })
+    },
+
+    checkAuth: (req, res, next) => {
+        var token = req.headers['authorization'].split(' ')[1];
+        if (!token) {
+            return res.status(401).send({
+                auth: false,
+                message: 'No token provided.'
+            });
+        }
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                return res.status(500).send({
+                    auth: false,
+                    message: 'Failed to authenticate token.'
+                });
+            }
+            next();
+        });
     }
 
 }
