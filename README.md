@@ -130,3 +130,46 @@ This API performs the following functions:
   "926059379818647622": {...}
 }
 ```
+
+### ⭐ Custom User Profile
+| Method | Endpoint | Parameter(s) | Auth | Description |
+| --- | --- | --- | --- | --- |
+| `GET` | `/profile` | `id` | ✅ | Get custom details of a user for his/her profile |
+
+#### Response Example
+```json
+{
+  "_id": "700005215654379562",
+  "name": "Arjun Krishna",
+  "email": "mail@arjunkrishna.in",
+  "mobile": 9400057152,
+  "gender": "Male",
+  "dob": {
+    "day": 4,
+    "month": 5,
+    "year": 1999
+  },
+  "department": "Master of Computer Application (MCA)",
+  "college": "Kristu Jyoti College of Management and Technology",
+  "admission": 2020,
+  "interest": [
+    "Web Designing",
+    "Internet of Things",
+    "Competitive Programming",
+    "Graphic Designing",
+    "Video Editing",
+    "Creative Writing"
+  ],
+  "profile": {
+    "bio": "Yet another human being born towards the end of the 20th century, and continues his Exploration & Experimentation on the Technology that the 21st century has to offer",
+    "tagline": "Microsoft Beta Student Ambassador | Self-taught Full Stack Developer",
+    "image": "https://lh3.googleusercontent.com/d/1QOWWzWgZLAEa_MD2SgKMV8Mxb_XWdle0",
+    "socials": {
+      "instagram": "decoded_cipher",
+      "twitter": "Decoded_Cipher",
+      "linkedin": "~arjunkrishna",
+      "github": "decoded-cipher"
+    }
+  }
+}
+```
