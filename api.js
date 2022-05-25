@@ -16,6 +16,7 @@ admin.initializeApp({
 var database = admin.database()
 var memberData = database.ref(process.env.FIREBASE_DATABASE_PATH)
 var birthdayData = database.ref(process.env.FIREBASE_BDAY_PATH)
+var profileData = database.ref(process.env.FIREBASE_PROFILE_PATH)
 // ----- Firebase Config End -----
 
 
@@ -93,7 +94,7 @@ module.exports = {
     getBdayUser: (date, month) => {
         return new Promise((resolve, reject) => {
             birthdayData.once('value', async (snapshot) => {
-                
+
                 var data = [];
                 var bDayData = await snapshot.val();
                 for (var key in bDayData) {
@@ -111,14 +112,14 @@ module.exports = {
                     resolve(data)
                 }
             })
-            
+
         })
     },
 
     getBdaysByMonth: (month) => {
         return new Promise((resolve, reject) => {
             birthdayData.once('value', async (snapshot) => {
-                
+
                 var data = {};
                 var bDayData = await snapshot.val();
                 for (var key in bDayData) {
@@ -153,6 +154,36 @@ module.exports = {
             }
             next();
         });
+    },
+
+    getProfileData: (id) => {
+        return new Promise((resolve, reject) => {
+            module.exports.formatUserData(id).then(user => {
+                profileData.child(id).once('value', (snapshot) => {
+                    if (snapshot.val() != null) {
+                        var data = snapshot.val()
+
+                        user.profile = {
+                            bio: data['User Bio'],
+                            tagline: data['User Tagline'],
+                            image: 'https://lh3.googleusercontent.com/d/' + data['Upload Photo'].split('=').pop(),
+                            socials: {
+                                instagram: data['Instagram Profile'].split('/').pop(),
+                                twitter: data['Twitter Handle'].split('/').pop(),
+                                linkedin: data['LinkedIn Profile'].split('/').pop(),
+                                github: data['GitHub Account'].split('/').pop()
+                            }
+                        }
+
+                        resolve(user)
+                    } else {
+                        reject('Data not found')
+                    }
+                })
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 
 }
