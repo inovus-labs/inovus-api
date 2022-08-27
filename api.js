@@ -76,8 +76,8 @@ module.exports = {
 
     getExtUserData: (id) => {
         return new Promise((resolve, reject) => {
-            module.exports.formatUserData(id).then(user => {
-                client.users.fetch(id).then(d_data => {
+            module.exports.formatUserData(id).then(async user => {
+                await client.users.fetch(id).then(d_data => {
                     user.discord = {
                         tag: d_data.tag,
                         avatar: 'https://cdn.discordapp.com/avatars/' + d_data.id + '/' + d_data.avatar + '.png',
