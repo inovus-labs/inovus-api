@@ -55,6 +55,25 @@ app.get('/profile', api.checkAuth, (req, res) => {
     })
 })
 
+app.post('/hacktoberfest', api.checkAuth , express.json(), (req, res) => {
+
+    var data = req.body;    
+    api.postHFData(data).then(data => {
+        res.send(data)
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
+app.get('/hacktoberfest', api.checkAuth, (req, res) => {
+    api.getHFData().then(data => {
+        res.send(data)
+        console.log(data);
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
 app.get('*', (req, res) => {
     res.status(404).send({
         error: 'Page not found'

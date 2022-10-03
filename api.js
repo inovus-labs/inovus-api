@@ -17,6 +17,7 @@ var database = admin.database()
 var memberData = database.ref(process.env.FIREBASE_DATABASE_PATH)
 var birthdayData = database.ref(process.env.FIREBASE_BDAY_PATH)
 var profileData = database.ref(process.env.FIREBASE_PROFILE_PATH)
+var hfData = database.ref(process.env.FIREBASE_HACKTOBERFEST_PATH)
 // ----- Firebase Config End -----
 
 
@@ -183,6 +184,39 @@ module.exports = {
             }).catch(err => {
                 reject(err)
             })
+        })
+    },
+
+    postHFData : (data) => {
+        return new Promise((resolve, reject) => {
+
+            hfData.child(data.id).set(data, (err) => {
+                if (err) {
+                    console.log('Error while writing data to database');
+                    reject(err);
+                } else {
+                    resolve('Data added successfully');
+                }
+            });
+
+        })
+    },
+
+    getHFData : () => {
+        return new Promise((resolve, reject) => {
+
+            hfData.once('value', (snapshot) => {
+                if (snapshot.val() != null) {
+                    // resolve(snapshot.val())
+                    var data = Object.keys(snapshot.val()).map(function(key) {
+                        return snapshot.val()[key];
+                    });
+                    resolve(data)
+                } else {
+                    reject('Data not found')
+                }
+            })
+
         })
     }
 
